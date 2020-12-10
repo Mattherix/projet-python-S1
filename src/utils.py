@@ -1,3 +1,4 @@
+"""A bunch of utility including the one used to encode and decode partition"""
 NOTE_TO_FREQUENCY = {
     "DO": 264,
     "RE": 297,
