@@ -1,12 +1,11 @@
 from math import inf
 
 
-def transposition(notes, k):
-    """Apply a transposition to all the notes
+def get_maxi_notes(notes):
+    """Get the the highest frequency from the notes
 
-    :param notes: The list of notes
-    :param k: The number use in the transposition
-    :return: All the notes transposed by k
+    :param notes: The lst of notes
+    :return: The maximum frequency
     """
     maxi = -inf
     frequencies = []
@@ -18,6 +17,17 @@ def transposition(notes, k):
             frequencies.append(frequency)
         if frequency > maxi:
             maxi = frequency
+    return maxi
+
+
+def transposition(notes, k):
+    """Apply a transposition to all the notes
+
+    :param notes: The list of notes
+    :param k: The number use in the transposition
+    :return: All the notes transposed by k
+    """
+    maxi = get_maxi_notes(notes)
 
     new_notes = []
     for frequency, duration in notes:
@@ -33,3 +43,24 @@ def transposition(notes, k):
             ))
     return new_notes
 
+
+def invertion(notes):
+    """Invert all the notes
+
+    :param notes: The list of notes
+    :return: All the notes invert
+    """
+    maxi = get_maxi_notes(notes)
+    new_notes = []
+    for frequency, duration in notes:
+        if frequency > 0:
+            new_notes.append((
+                (maxi - frequency) % maxi,
+                duration
+            ))
+        else:
+            new_notes.append((
+                frequency,
+                duration
+            ))
+    return new_notes
