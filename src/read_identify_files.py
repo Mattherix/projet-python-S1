@@ -1,3 +1,24 @@
+#ne fonctionne pas, à refaire
+#erreur "'str' object does not support item assignment"
+def correct_accent(text):
+    for i in range(len(text)):
+        if text[i-1] == 'Ã' and text[i] == '¨':
+            text[i-1:i] = 'è'
+        elif text[i-1] == 'Ã' and text[i] == '¢':
+            text[i-1:i] = 'â'
+        elif text[i-1] == 'Ã' and text[i] == '©':
+            text[i-1:i] = 'é'
+        elif text[i-1] == 'Ã' and text[i] == 'ª':
+            text[i-1:i] = 'ê'
+        elif text[i-1] == 'Ã' and text[i] == '«':
+            text[i-1:i] = 'ë'
+        elif text[i-1] == 'Ã' and text[i] == '¹':
+            text[i-1:i] = 'ù'
+        #pb pour "à"
+        elif text[i-3] == 'Ã' and text[i-2] == '\x' and text[i-1] == 'a' and text[i] == '0':
+            text[i-3:i] = 'à'
+    return text
+
 def read_files(file):
     Rfile = open(file, "r")
 
@@ -9,6 +30,7 @@ def read_files(file):
         n += 1
         if ligne[-1] == '\n':
             ligne = ligne[0:-1]
+        #ligne = correct_accent(ligne)
         aff_temp.append(ligne)
         if n >= 2:
             aff.append(aff_temp)
