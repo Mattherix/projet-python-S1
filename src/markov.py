@@ -70,6 +70,7 @@ def Markov_set(parti, mark):
 #bloqué par 'ampli_tab'
 def Markov_use(tab, nb):
     T = []
+    #markov.txt est un fichier à rajouté à la même source que le programme
     file = open("markov.txt", 'w')
     T.append(ampli_tab(tab(7)))
     r = random.randint(0, len(T)-1)
