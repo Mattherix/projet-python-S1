@@ -1,10 +1,23 @@
-from time import sleep
 import numpy as np
 import simpleaudio as sa
 
+from src.utils import decode_partition, NOTE_TO_FREQUENCY
 
-def play():
-    pass
+
+def play(partition):
+    """Play a give partion
+
+    :param partition: The partion as a strings
+    :return: Nothing
+    """
+    partition = decode_partition(partition, NOTE_TO_FREQUENCY, 0.25)
+    last_frequency = 0
+    for frequency, duration in partition:
+        if frequency != -1:
+            sound(frequency, duration)
+        else:
+            sound(last_frequency, duration)
+        last_frequency = frequency
 
 
 def sound(freq, duration):
@@ -37,6 +50,4 @@ def sound(freq, duration):
     play_obj = sa.play_buffer(audio, 1, 3, sample_rate)
     # wait for playback to finish before exiting
     play_obj.wait_done()
-
-
 
