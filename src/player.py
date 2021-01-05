@@ -1,16 +1,25 @@
 import numpy as np
 import simpleaudio as sa
 
+from src.edit import transposition, invertion
 from src.utils import decode_partition, NOTE_TO_FREQUENCY
 
 
-def play(partition):
+def play(partition, k=None, invert=False):
     """Play a give partion
 
     :param partition: The partion as a strings
+    :param k: The number used in the transposition, by default none
+    :param invert: Do an inverion on the partition, by default at False
     :return: Nothing
     """
     partition = decode_partition(partition, NOTE_TO_FREQUENCY, 0.25)
+    print(partition)
+    if k:
+        partition = transposition(partition, k)
+    if invert:
+        partition = invertion(partition)
+    print(partition)
     last_frequency = 0
     for frequency, duration in partition:
         if frequency != -1:
