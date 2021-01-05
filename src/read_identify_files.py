@@ -1,4 +1,3 @@
-
 """
 #ne fonctionne pas, à refaire
 #erreur "'str' object does not support item assignment"
@@ -21,6 +20,7 @@ def correct_accent(text):
             text[i-3:i] = 'à'
     return text
 """
+
 def read_files(file):
     """Read the file and return all the titles and partion
 
