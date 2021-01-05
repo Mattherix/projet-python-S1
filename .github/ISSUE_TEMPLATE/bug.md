@@ -4,9 +4,7 @@ about: Parler d'un bug sur le programme
 ---
 Une explication rapide du ou des bugs et de leurs localisations.
 
-Branche créé: issue-bug
-Branche d'origine: issue
-PR: #XX
+Branche créé: issue-bug Branche d'origine: issue PR: #XX
 
 ## Reproduire
 

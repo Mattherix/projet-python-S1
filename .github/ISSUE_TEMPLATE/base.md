@@ -4,9 +4,7 @@ about: Model de base sur une issue
 ---
 Explication sur l'issue
 
-Branche créé: issue
-Branche d'origine: main
-PR: #XX
+Branche créé: issue Branche d'origine: main PR: #XX
 
 ## TODO
 
