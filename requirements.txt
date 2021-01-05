@@ -1,0 +1,2 @@
+PyGobject
+PyGObject-stubs
