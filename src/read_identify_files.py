@@ -17,7 +17,7 @@ def correct_accent(text):
         elif text[i-1] == 'Ã' and text[i] == '¹':
             text[i-1:i] = 'ù'
         #pb pour "à"
-        elif text[i-3] == 'Ã' and text[i-2] == '\x' and text[i-1] == 'a' and text[i] == '0':
+        elif text[i-3] == 'Ã' and text[i-2] == 'x' and text[i-1] == 'a' and text[i] == '0':
             text[i-3:i] = 'à'
     return text
 """
@@ -25,12 +25,11 @@ def read_files(file):
     """Read the file and return all the titles and partion
 
     :param file: The name of the file 
-    :return: A list of partion and a list titles
+    :return: A list of (titre, partion) [(titre, partition), (a, b), ...]
     """
     Rfile = open(file, "r")
 
     aff = []
-    titre = []
     aff_temp = []
     n = 0
     lignes = Rfile.readlines()
@@ -38,15 +37,11 @@ def read_files(file):
         n += 1
         if ligne[-1] == '\n':
             ligne = ligne[0:-1]
-        #ligne = correct_accent(ligne)
+        # ligne = correct_accent(ligne)
         aff_temp.append(ligne)
-        if n == 1:
-            titre.append(aff_temp)
+        if n >= 2:
             aff.append(aff_temp)
             aff_temp = []
             n = 0
-        else:
-            aff.append(aff_temp)
-            aff_temp = []
-            n = 1
-    return aff, titre
+
+    return aff
