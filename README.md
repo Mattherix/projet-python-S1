@@ -14,5 +14,5 @@ pip install -r requirements.txt
 
 Lancez le l'application
 ```shell
-python src/main.py
+python run.py
 ```
