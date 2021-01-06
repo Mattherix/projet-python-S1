@@ -1,3 +1,5 @@
+from random import choice
+
 import numpy as np
 import simpleaudio as sa
 
@@ -50,17 +52,25 @@ def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
     j = 0
     last_frequency = 0
     for frequency, duration in partition:
-        if frequency != -1:
+        if frequency != -1 and not m and not k and not invert:
             sound(frequency, duration)
             canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30 - duration_to_size[duration],
                                15 + i * 30 + duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
                                fill=FREQUENCY_TO_COLOR[frequency])
             canvas.update()
-        else:
+        elif frequency == 1 and not m and not k and not invert:
             sound(last_frequency, duration)
             canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30,
                                15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
                                fill=FREQUENCY_TO_COLOR[last_frequency])
+            canvas.update()
+        else:
+            # Put a random color and size if it have be transform, not in the dictionnary
+            sound(frequency, duration)
+            colors = ['white', 'red', 'green', 'cyan', 'yellow', 'blue', 'magenta', 'black']
+            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30,
+                               15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
+                               fill=choice(colors))
             canvas.update()
         i += 1
         if i == 17:

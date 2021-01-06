@@ -1,39 +1,25 @@
 from tkinter import Tk, Canvas, BOTTOM, Button, Label, TOP, Listbox, Checkbutton, filedialog, Scale, IntVar, \
     BooleanVar, Text, LEFT
 
-from src.edit import transposition, invertion
-from src.markov import markov
 from src.player import play
 from src.read_identify_files import read_files
-from src.utils import decode_partition, NOTE_TO_FREQUENCY, encode_partition
 
 
-def add_partition(text, partition, file, liste, k=None, invert=False, m=False, partition_markov=""):
+def add_partition(text, partition, file, liste):
     """Write the file, add a partition
+
+    Sadly translation, invert and markov operation are not allowed,
+    we won't be able to encode the partition after that.
 
     :param text: The text field with the title
     :param partition: The partition field with the partition
     :param file: The name of the file
     :param liste: A Listbox(window) object
-    :param k: The number used in the transposition, by default none
-    :param invert: Do an inverion on the partition, by default at False
-    :param m: Use the markov transformation, by default at False
-    :param partition_markov: The partition used for markov
     :return: Nothing
     """
     global partitions
     title = ''.join(text.get("1.0", "end").split('\n'))
     partition = ''.join(partition.get("1.0", "end").split('\n'))
-
-    quaver = 0.25
-    partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
-    if m:
-        partition = markov(partition_markov, partition, number_of_note=20)
-    if k:
-        partition = transposition(partition, k)
-    if invert:
-        partition = invertion(partition)
-    partition = encode_partition(partition, NOTE_TO_FREQUENCY, quaver)
 
     with open(file, 'a') as f:
         f.write(title + '\n')
@@ -76,7 +62,7 @@ def main():
     text.pack(side=TOP)
 
     btn_2 = Button(window, text="Sauvegarder", width=15,
-                   command=lambda: add_partition(title, text, filepath, liste, k.get(), invert.get(), m.get(), text.get("1.0", "end")))
+                   command=lambda: add_partition(title, text, filepath, liste))
     btn_2.pack(side=TOP, pady=5)
 
     canvas = Canvas(window, bg='#EEEEEE', height=500, width=500, bd=0, highlightthickness=0)
@@ -100,7 +86,6 @@ def main():
     btn_1 = Button(window, text="Jouer", width=15,
                    command=lambda: play(partitions[get_index()], canvas, k.get(), invert.get(), m.get(), text.get("1.0", "end")))
     btn_1.pack()
-
     btn_3 = Button(window, text="Quitter", width=15, command=window.destroy)
     btn_3.pack(side=BOTTOM)
 
