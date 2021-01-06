@@ -47,11 +47,15 @@ def play(partition, canvas, k=None, invert=False):
     for frequency, duration in partition:
         if frequency != -1:
             sound(frequency, duration)
-            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30 - duration_to_size[duration], 15 + i * 30 + duration_to_size[duration], 20 + j * 30 + duration_to_size[duration], fill=FREQUENCY_TO_COLOR[frequency])
+            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30 - duration_to_size[duration],
+                               15 + i * 30 + duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
+                               fill=FREQUENCY_TO_COLOR[frequency])
             canvas.update()
         else:
             sound(last_frequency, duration)
-            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30, 15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration], fill=FREQUENCY_TO_COLOR[last_frequency])
+            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30,
+                               15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
+                               fill=FREQUENCY_TO_COLOR[last_frequency])
             canvas.update()
         i += 1
         if i == 17:

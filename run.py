@@ -1,4 +1,5 @@
 from src import main
 
-if __name__ == '__main__':
-    main()
+run = True
+while run:
+    run = main()
