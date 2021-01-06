@@ -20,7 +20,7 @@ def add_partition(text, partition, file, liste, k=None, invert=False):
     """
     global partitions
     title = ''.join(text.get("1.0", "end").split('\n'))
-    partition = ''.join(text.get("1.0", "end").split('\n'))
+    partition = ''.join(partition.get("1.0", "end").split('\n'))
 
     quaver = 0.25
     partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
