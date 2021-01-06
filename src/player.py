@@ -41,9 +41,10 @@ def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
         (quaver / 8): 0.375,
         (quaver / 16): 0.1875
     }
-    partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
+
     if m:
         partition = markov(partition_markov, partition, number_of_note=20)
+    partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
     if k:
         partition = transposition(partition, k)
     if invert:

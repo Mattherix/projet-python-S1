@@ -84,7 +84,7 @@ def main():
     btn_invertion.pack()
     btn_markov.pack()
     btn_1 = Button(window, text="Jouer", width=15,
-                   command=lambda: play(partitions[get_index()], canvas, k.get(), invert.get(), m.get(), text.get("1.0", "end")))
+                   command=lambda: play(partitions[get_index()], canvas, k.get(), invert.get(), m.get(), partition_markov=text.get("1.0", "end")))
     btn_1.pack()
     btn_3 = Button(window, text="Quitter", width=15, command=window.destroy)
     btn_3.pack(side=BOTTOM)
