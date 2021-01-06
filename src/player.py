@@ -2,6 +2,7 @@ import numpy as np
 import simpleaudio as sa
 
 from src.edit import transposition, invertion
+from src.markov import markov
 from src.utils import decode_partition, NOTE_TO_FREQUENCY
 
 FREQUENCY_TO_COLOR = {
@@ -16,13 +17,15 @@ FREQUENCY_TO_COLOR = {
 }
 
 
-def play(partition, canvas, k=None, invert=False):
+def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
     """Play a give partion
 
     :param partition: The partion as a strings
     :param canvas: The canvas used to draw
     :param k: The number used in the transposition, by default none
     :param invert: Do an inverion on the partition, by default at False
+    :param m: Use the markov transformation, by default at False
+    :param partition_markov: The partition used for markov
     :return: Nothing
     """
     quaver = 0.25
@@ -37,6 +40,8 @@ def play(partition, canvas, k=None, invert=False):
         (quaver / 16): 0.1875
     }
     partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
+    if m:
+        partition = markov(partition_markov, partition, number_of_note=20)
     if k:
         partition = transposition(partition, k)
     if invert:
