@@ -4,28 +4,61 @@ import simpleaudio as sa
 from src.edit import transposition, invertion
 from src.utils import decode_partition, NOTE_TO_FREQUENCY
 
+FREQUENCY_TO_COLOR = {
+    264: 'white',
+    297: 'red',
+    330: 'green',
+    352: 'cyan',
+    396: 'yellow',
+    440: 'blue',
+    495: 'magenta',
+    -1: 'black'
+}
 
-def play(partition, k=None, invert=False):
+
+def play(partition, canvas, k=None, invert=False):
     """Play a give partion
 
     :param partition: The partion as a strings
+    :param canvas: The canvas used to draw
     :param k: The number used in the transposition, by default none
     :param invert: Do an inverion on the partition, by default at False
     :return: Nothing
     """
-    partition = decode_partition(partition, NOTE_TO_FREQUENCY, 0.25)
-    print(partition)
+    quaver = 0.25
+    duration_to_size = {
+        (8 * quaver): 15,
+        (4 * quaver): 10,
+        (2 * quaver): 5,
+        (1 * quaver): 2.5,
+        (quaver / 2): 1.25,
+        (quaver / 4): 0.75,
+        (quaver / 8): 0.375,
+        (quaver / 16): 0.1875
+    }
+    partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
     if k:
         partition = transposition(partition, k)
     if invert:
         partition = invertion(partition)
-    print(partition)
+    i = 0
+    j = 0
     last_frequency = 0
     for frequency, duration in partition:
         if frequency != -1:
             sound(frequency, duration)
+            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30 - duration_to_size[duration], 15 + i * 30 + duration_to_size[duration], 20 + j * 30 + duration_to_size[duration], fill=FREQUENCY_TO_COLOR[frequency])
+            canvas.update()
         else:
             sound(last_frequency, duration)
+            canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30, 15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration], fill=FREQUENCY_TO_COLOR[last_frequency])
+            canvas.update()
+        i += 1
+        if i == 17:
+            j += 1
+            i = 0
+        if j == 17:
+            j = 0
         last_frequency = frequency
 
 
@@ -59,4 +92,3 @@ def sound(freq, duration):
     play_obj = sa.play_buffer(audio, 1, 3, sample_rate)
     # wait for playback to finish before exiting
     play_obj.wait_done()
-

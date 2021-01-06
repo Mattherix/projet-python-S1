@@ -41,10 +41,10 @@ btn_transposition = Scale(window, orient='horizontal', from_=-100, to=100, ticki
 btn_invertion = Checkbutton(window, text="Invertion", variable=invert)
 btn_transposition.pack()
 btn_invertion.pack()
-btn = Button(window, text="Jouer", width=15, command=lambda: play(partitions[get_index()], k.get(), invert.get()))
+btn = Button(window, text="Jouer", width=15, command=lambda: play(partitions[get_index()], canvas, k.get(), invert.get()))
 btn.pack(side=TOP, pady=5)
 
 btn = Button(window, text="Quitter", width=15, command=window.destroy)
 btn.pack(side=BOTTOM, pady=5)
-print(liste.curselection())
+
 window.mainloop()
