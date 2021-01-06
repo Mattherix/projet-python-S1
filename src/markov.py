@@ -1,16 +1,16 @@
 import random
 
-#fonctionne pas
+#used to set the RNG to create the partition
 def ampli_tab(tab):
     new_tab = []
     for i in range(len(tab)):
         if tab[i] > 0:
             n = tab[i]
             for t in range(n):
-                new_tab.append(n)
+                new_tab.append(i)
     return new_tab
 
-#non tester
+#identify a note by the number inside the note frequency list, and return the str note
 def write_note(n):
     text = ''
     if n == 0:
@@ -30,63 +30,57 @@ def write_note(n):
 
     return text
 
-#fonctionne
-def Markov_reset(mark, ver):
+#Reset all the settings if ver = True or if the note frequency list is empty, else it will do nothing
+def Markov_reset(mark, ver, markov_partition):
     if (ver == True) or (mark == []):
         #                Do=0                   Ré=1                   Mi=2                  Fa=3                   Sol=4                  La=5                  Si=6            Do Ré Mi Fa Sol La Si
-        # indice mark((Do, Ré, Mi, Fa, Sol, La, Si),(Do, Ré, Mi, Fa, ...), ...)
+        # indice -> ((Do, Ré, Mi, Fa, Sol, La, Si),(Do, Ré, Mi, Fa, ...), ...)
         mark = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
+        markov_partition = ''
 
-    return mark
+    return mark, markov_partition
 
-#ne fonctionne pas correctment
+#Take the reference partition and the note frenquency, and return a new note frequency list
 def Markov_set(parti, mark):
-    #pas tester correctement      {
     ntab = []
-    for i in range(1, len(parti)):
-        if (parti[i-1:i] == 'DO'):
+    for i in range(0, len(parti)):
+        if (parti[i] == 'D'):
             ntab.append(0)
-        if (parti[i-1:i] == 'RE'):
+        if (parti[i] == 'R'):
             ntab.append(1)
-        if (parti[i-1:i] == 'MI'):
+        if (parti[i] == 'M'):
             ntab.append(2)
-        if (parti[i-1:i] == 'FA'):
+        if (parti[i] == 'F'):
             ntab.append(3)
-        if (parti[i-1:i+1] == 'SOL'):
+        if (parti[i] == 'S' and parti[i+1] == 'O'):
             ntab.append(4)
-        if (parti[i-1:i] == 'LA'):
+        if (parti[i] == 'L' and parti[i+1] == 'A'):
             ntab.append(5)
-        if (parti[i-1:i] == 'SI'):
+        if (parti[i] == 'S' and parti[i+1] == 'I'):
             ntab.append(6)
-            #                     }
-    #ind1 et ind2 sont vide sans raison?
+
     for i in range(1, len(ntab)):
-        ind1 = ntab[i-1]
+        ind1 = ntab[i - 1]
         ind2 = ntab[i]
-        mark[7][ind1] = mark[7][ind1]+1
-        mark[ind1][ind2] = mark[ind1][ind2]+1
+        mark[7][ind1] = mark[7][ind1] + 1
+        mark[ind1][ind2] = mark[ind1][ind2] + 1
+
+
     return mark
 
-#bloqué par 'ampli_tab'
-def Markov_use(tab, nb):
+#Take the note frequency and the existing Markov partition, and you set the number of note you want in your new Markov partition
+def Markov_use(tab, nb, markov_partition):
     T = []
-    #markov.txt est un fichier à rajouté à la même source que le programme
-    file = open("markov.txt", 'w')
-    T.append(ampli_tab(tab(7)))
+    T = ampli_tab(tab[7])
     r = random.randint(0, len(T)-1)
-    ind = T(r)
+    ind = T[r]
     wrgt = write_note(ind)
-    file.write(wrgt + " ")
+    markov_partition = markov_partition + (wrgt + 'n ')
     for i in range(nb-1):
-        T = ampli_tab(tab(ind))
+        T = ampli_tab(tab[ind])
         r = random.randint(0, len(T)-1)
-        ind = T(r)
+        ind = T[r]
         wrgt = write_note(ind)
-        file.write(wrgt + " ")
+        markov_partition = markov_partition + (wrgt + 'n ')
 
-#test
-TAB = []
-A = Markov_reset(TAB, False)
-B = Markov_set('SOLc p Zc SOLn LAn SOLn DOn Zc SIb SOLc p Zc SOLn LAn SOLn REn Zc DOb SOLc', A)
-print(B)
-C = Markov_use(B, 10)
+    return markov_partition
