@@ -1,34 +1,24 @@
-"""
-#ne fonctionne pas, à refaire
-#erreur "'str' object does not support item assignment"
 def correct_accent(text):
     for i in range(len(text)):
         if text[i-1] == 'Ã' and text[i] == '¨':
-            text[i-1:i] = 'è'
+            text = text[:i-1] + 'è' + text[i+1:]
         elif text[i-1] == 'Ã' and text[i] == '¢':
-            text[i-1:i] = 'â'
+            text = text[:i-1] + 'â' + text[i+1:]
         elif text[i-1] == 'Ã' and text[i] == '©':
-            text[i-1:i] = 'é'
+            text = text[:i-1] + 'é' + text[i+1:]
         elif text[i-1] == 'Ã' and text[i] == 'ª':
-            text[i-1:i] = 'ê'
+            text = text[:i-1] + 'ê' + text[i+1:]
         elif text[i-1] == 'Ã' and text[i] == '«':
-            text[i-1:i] = 'ë'
+            text = text[:i-1] + 'ë' + text[i+1:]
         elif text[i-1] == 'Ã' and text[i] == '¹':
-            text[i-1:i] = 'ù'
-        #pb pour "à"
-        elif text[i-3] == 'Ã' and text[i-2] == 'x' and text[i-1] == 'a' and text[i] == '0':
-            text[i-3:i] = 'à'
+            text = text[:i-1] + 'ù' + text[i+1:]
+        elif text[i-4] == 'Ã' and text[i-2] == 'x' and text[i-1] == 'a' and text[i] == '0':
+            text = text[:i-4] + 'à' + text[i+1:]
+
     return text
-"""
 
 def read_files(file):
-    """Read the file and return all the titles and partion
-
-    :param file: The name of the file 
-    :return: A list of (titre, partion) [(titre, partition), (a, b), ...]
-    """
     Rfile = open(file, "r")
-
     aff = []
     aff_temp = []
     n = 0
@@ -37,7 +27,7 @@ def read_files(file):
         n += 1
         if ligne[-1] == '\n':
             ligne = ligne[0:-1]
-        # ligne = correct_accent(ligne)
+        ligne = correct_accent(ligne)
         aff_temp.append(ligne)
         if n >= 2:
             aff.append(aff_temp)
