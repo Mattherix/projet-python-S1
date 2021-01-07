@@ -22,13 +22,13 @@ FREQUENCY_TO_COLOR = {
 def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
     """Play a give partion
 
-    :param partition: The partion as a strings
-    :param canvas: The canvas used to draw
-    :param k: The number used in the transposition, by default none
+    :param partition: The partion as a strings ie: "SOLc p Zc"
+    :param canvas: The canvas used to draw ie: tk.Canvas(...)
+    :param k: The number used in the transposition, by default none ie: 15
     :param invert: Do an inverion on the partition, by default at False
     :param m: Use the markov transformation, by default at False
-    :param partition_markov: The partition used for markov
-    :return: Nothing
+    :param partition_markov: The partition used for markov ie: "LAn SOLn DOn Zc SIb SOLc p Zc SOLn"
+    :return: Nothing, The sound of the partition played in the speaker, Clean the canvas and play the animation on it
     """
     quaver = 0.25
     duration_to_size = {
@@ -85,13 +85,12 @@ def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
         last_frequency = frequency
 
 
-
 def sound(freq, duration):
     """Play a note
 
-    :param freq: The frequency of the note
-    :param duration: The duration in second
-    :return: Nothing
+    :param freq: The frequency of the note ie: 396
+    :param duration: The duration in second ie: 1
+    :return: Nothing, The sound of the note in the speaker ie: SOL for 1 second
     """
     # get time steps for each sample , "duration" is note duration in seconds
     sample_rate = 44100

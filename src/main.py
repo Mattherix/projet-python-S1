@@ -42,9 +42,11 @@ def add_partition(text, partition, file, liste):
 
 
 def main():
-    """The main function
+    """The main function, a warpper around the main code.
+    Do everything about the UI.
+    Linked the UI ("Jouer" button, "Sauvergarder" button) to there respective function.
 
-    :return: Notion
+    :return: False if the programme have correctly terminate
     """
     window = Tk()
     window['bg'] = "#9E9E9E"
@@ -85,12 +87,14 @@ def main():
     m = BooleanVar()
     btn_transposition = Scale(window, orient='horizontal', from_=-100, to=100, tickinterval=1, length=350, variable=k)
     btn_invertion = Checkbutton(window, text="Invertion", variable=invert)
-    btn_markov = Checkbutton(window, text="Chaine de Markov, sélectionez une musique et entré une partition", variable=m)
+    btn_markov = Checkbutton(window, text="Chaine de Markov, sélectionez une musique et entré une partition",
+                             variable=m)
     btn_transposition.pack()
     btn_invertion.pack()
     btn_markov.pack()
     btn_1 = Button(window, text="Jouer", width=15,
-                   command=lambda: play(partitions[get_index(liste)], canvas, k.get(), invert.get(), m.get(), partition_markov=text.get("1.0", "end")))
+                   command=lambda: play(partitions[get_index(liste)], canvas, k.get(), invert.get(), m.get(),
+                                        partition_markov=text.get("1.0", "end")))
     btn_1.pack()
     btn_3 = Button(window, text="Quitter", width=15, command=window.destroy)
     btn_3.pack(side=BOTTOM)

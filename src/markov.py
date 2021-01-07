@@ -102,4 +102,3 @@ def markov(partition, partition_origin, number_of_note=20):
     mark, markov_partition = Markov_reset([], False, partition)
     tab = Markov_set(partition_origin, mark)
     return Markov_use(tab, number_of_note, markov_partition)
-

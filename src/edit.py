@@ -4,8 +4,8 @@ from math import inf
 def get_maxi_notes(notes):
     """Get the the highest frequency from the notes
 
-    :param notes: The lst of notes
-    :return: The maximum frequency
+    :param notes: The list of notes ie: [(495, 5), (396, 2.5), (-1, 20)]
+    :return: The maximum frequency ie: 495
     """
     maxi = -inf
     frequencies = []
@@ -23,9 +23,9 @@ def get_maxi_notes(notes):
 def transposition(notes, k):
     """Apply a transposition to all the notes
 
-    :param notes: The list of notes
-    :param k: The number use in the transposition
-    :return: All the notes transposed by k
+    :param notes: The list of notes ie: [(396, 5), (396, 2.5), (-1, 20)]
+    :param k: The number use in the transposition ie: 15
+    :return: All the notes transposed by k ie: [(15, 5), (15, 2.5), (-1, 20)]
     """
     maxi = get_maxi_notes(notes)
 
@@ -47,8 +47,8 @@ def transposition(notes, k):
 def invertion(notes):
     """Invert all the notes
 
-    :param notes: The list of notes
-    :return: All the notes invert
+    :param notes: The list of notes ie: [(396, 5), (396, 2.5), (-1, 20)]
+    :return: All the notes invert ie: [(0, 5), (0, 2.5), (-1, 20)]
     """
     maxi = get_maxi_notes(notes)
     new_notes = []
