@@ -121,7 +121,7 @@ def markov_use(tab, nb, markov_partition):
     return markov_partition
 
 
-def markov(partition, partition_origin, number_of_note=20):
+def markov(partition, partition_origin, number_of_note, reset_value):
     """Create a partition with markov
 
     :param partition: The partion as a string i.e. "SOLc p Zb"
@@ -129,6 +129,6 @@ def markov(partition, partition_origin, number_of_note=20):
     :param number_of_note: Number of note in the new partition, default 20
     :return: The partition as a strings
     """
-    mark, markov_partition = markov_reset([], False, partition)
+    mark, markov_partition = markov_reset([], reset_value, partition)
     tab = markov_set(partition_origin, mark)
     return markov_use(tab, number_of_note, markov_partition)
