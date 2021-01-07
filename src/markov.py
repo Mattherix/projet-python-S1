@@ -21,15 +21,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import random
 
-
-# TODO: @Tidoulidou Add the parameter in the docstrings(""" Blabla """) of your functions
-# TODO: Add more comment in the functions
-
 def ampli_tab(tab):
-    """Used to set the RNG to create the partition
+    """Used to set the RNG's interval to create the partition by using the list of note frequency
 
-    :param tab:
-    :return:
+    :param tab: note frenquency example [0, 3, 5, 1, 0, 4, 1]
+    :return: RNG's interval example [1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 5, 5, 5, 6]
     """
     new_tab = []
     for i in range(len(tab)):
@@ -41,8 +37,7 @@ def ampli_tab(tab):
 
 
 def write_note(n):
-    # TODO: @Tidoulidou Use a dictionnary
-    """Identify a note by the number inside the note frequency list, and return the str note
+    """Identify a note by the number inside the RNG's interval list, and return the str note
 
     :param n: the number
     :return: The str note
@@ -146,9 +141,9 @@ def markov_use(tab, nb, markov_partition):
 def markov(partition, partition_origin, number_of_note, reset_value):
     """Create a partition with markov
 
-    :param partition: The partion as a string i.e. "SOLc p Zb"
+    :param partition: The partion as a string i.e.
     :param partition_origin: The original partition
-    :param number_of_note: Number of note in the new partition, default 20
+    :param number_of_note: Number of note in the new partition
     :return: The partition as a strings
     """
     mark, markov_partition = markov_reset([], reset_value, partition)
