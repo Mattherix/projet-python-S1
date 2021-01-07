@@ -19,7 +19,7 @@ FREQUENCY_TO_COLOR = {
 }
 
 
-def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
+def play(partition, markov_notes, markov_reset, canvas, k=None, invert=False, m=False, partition_markov=""):
     """Play a give partion
 
     :param partition: The partion as a strings ie: "SOLc p Zc"
@@ -43,7 +43,7 @@ def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
     }
 
     if m:
-        partition = markov(partition_markov, partition, number_of_note=20)
+        partition = markov(partition_markov, partition, markov_notes, markov_reset)
     partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
     if k:
         partition = transposition(partition, k)
