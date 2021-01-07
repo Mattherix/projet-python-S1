@@ -1,8 +1,63 @@
+"""
+The main file. It manage the UI, it's the glue of the program. + the add_partition() functions
+Author: Matthieu ROQUEJOFFRE
+Minor modification made by: Titouan DUPUIS
+
+Project python S1 is a program used to play musical partition and apply effet on it
+Copyright (C) 2021  Matthieu ROQUEJOFFRE Titouan DUPUIS
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 from tkinter import Tk, Canvas, BOTTOM, Button, Label, TOP, Listbox, Checkbutton, filedialog, Scale, IntVar, \
     BooleanVar, Text, LEFT
 
 from src.player import play
 from src.read_identify_files import read_files
+
+global partitions
+
+
+def add_partition(text, partition, file, liste):
+    """Write the file, add a partition
+
+    Why do you use a global variable instead of return a variable
+        -> You can't get the return value of a fuction call via a tkinter button
+    Why is it in the main file ? Why not in the read_identify_files.py file ?
+        -> If you put this function in the read_identify_files.py file you will be forced to import the main file to
+        access the global variable, creating an import loop
+
+    Sadly translation, invert and markov operation are not allowed,
+    we won't be able to encode the partition after that.
+
+    :param text: The text field with the title
+    :param partition: The partition field with the partition
+    :param file: The name of the file
+    :param liste: A Listbox(window) object
+    :return: Nothing, you can't return something if it's call by a tkinter button
+    Side effet: edit the global variable partitions, partitions
+    """
+    global partitions
+    title = ''.join(text.get("1.0", "end").split('\n'))
+    partition = ''.join(partition.get("1.0", "end").split('\n'))
+
+    with open(file, 'a') as f:
+        f.write(title + '\n')
+        f.write(partition + '\n')
+    liste.insert(-1, title)
+
+    partitions.append(partition)
 
 
 def get_index(liste=None):
@@ -17,28 +72,19 @@ def get_index(liste=None):
         return 0
 
 
-def add_partition(text, partition, file, liste):
-    """Write the file, add a partition
+def get_partitions_in_liste(window, filepath):
+    """Get all the partions and return a tk liste
 
-    Sadly translation, invert and markov operation are not allowed,
-    we won't be able to encode the partition after that.
-
-    :param text: The text field with the title
-    :param partition: The partition field with the partition
-    :param file: The name of the file
-    :param liste: A Listbox(window) object
-    :return: Nothing
+    :param window: The windows where the list will be attach
+    :param filepath: The filepath
+    :return: The ListBox object and the partitions
     """
-    global partitions
-    title = ''.join(text.get("1.0", "end").split('\n'))
-    partition = ''.join(partition.get("1.0", "end").split('\n'))
-
-    with open(file, 'a') as f:
-        f.write(title + '\n')
-        f.write(partition + '\n')
-    liste.insert(len(partitions) + 1, title)
-
-    partitions.append(partition)
+    liste = Listbox(window)
+    partitions = []
+    for i, title_and_partitions in enumerate(read_files(filepath)):
+        liste.insert(i + 1, title_and_partitions[0])
+        partitions.append(title_and_partitions[1])
+    return liste, partitions
 
 
 def main():
@@ -58,12 +104,8 @@ def main():
     if not filepath:
         filepath = 'partition.txt'
 
-    global partitions
-    liste = Listbox(window)
-    partitions = []
-    for i, title_and_partitions in enumerate(read_files(filepath)):
-        liste.insert(i + 1, title_and_partitions[0])
-        partitions.append(title_and_partitions[1])
+    liste, partitions = get_partitions_in_liste(window, filepath)
+
     liste.pack(side=LEFT)
 
     label = Label(window, text="Création d'une partition")
