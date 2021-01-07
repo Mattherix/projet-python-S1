@@ -5,6 +5,18 @@ from src.player import play
 from src.read_identify_files import read_files
 
 
+def get_index(liste=None):
+    """A function witch return the index of the musique selected by the user, if selected.
+
+    :param liste: The Listbox() object containing the user input
+    :return: The index of the selected item
+    """
+    if liste.curselection():
+        return liste.curselection()[0]
+    else:
+        return 0
+
+
 def add_partition(text, partition, file, liste):
     """Write the file, add a partition
 
@@ -68,12 +80,6 @@ def main():
     canvas = Canvas(window, bg='#EEEEEE', height=500, width=500, bd=0, highlightthickness=0)
     canvas.pack()
 
-    def get_index():
-        if liste.curselection():
-            return liste.curselection()[0]
-        else:
-            return 0
-
     k = IntVar()
     invert = BooleanVar()
     m = BooleanVar()
@@ -84,7 +90,7 @@ def main():
     btn_invertion.pack()
     btn_markov.pack()
     btn_1 = Button(window, text="Jouer", width=15,
-                   command=lambda: play(partitions[get_index()], canvas, k.get(), invert.get(), m.get(), partition_markov=text.get("1.0", "end")))
+                   command=lambda: play(partitions[get_index(liste)], canvas, k.get(), invert.get(), m.get(), partition_markov=text.get("1.0", "end")))
     btn_1.pack()
     btn_3 = Button(window, text="Quitter", width=15, command=window.destroy)
     btn_3.pack(side=BOTTOM)
