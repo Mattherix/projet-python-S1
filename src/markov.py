@@ -23,6 +23,7 @@ import random
 
 
 # TODO: @Tidoulidou Add the parameter in the docstrings(""" Blabla """) of your functions
+# TODO: Add more comment in the functions
 
 def ampli_tab(tab):
     """Used to set the RNG to create the partition

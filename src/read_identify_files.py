@@ -17,7 +17,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 """
 
 
@@ -52,17 +51,20 @@ def read_files(filepath):
     :param filepath: The path to file containing all musics ie: "partitions.txt"
     :return: A list of all the music and there [("#1 Joyeux anniversaire", "SOLc p Zc SOLn")]
     """
+    # Open a file
     file_read = open(filepath, "r")
     aff = []
     aff_temp = []
     n = 0
     lignes = file_read.readlines()
+    # We loop on every ligne of the file and put it in the list
     for ligne in lignes:
         n += 1
         if ligne[-1] == '\n':
             ligne = ligne[0:-1]
         ligne = correct_accent(ligne)
         aff_temp.append(ligne)
+        # Check if it's a title or a partition
         if n >= 2:
             aff.append(aff_temp)
             aff_temp = []

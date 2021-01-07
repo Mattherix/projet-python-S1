@@ -62,7 +62,7 @@ def play(partition, markov_notes, markov_reset, canvas, k=None, invert=False, m=
         (quaver / 8): 0.375,
         (quaver / 16): 0.1875
     }
-
+    # Lets apply all the filter
     if m:
         partition = markov(partition_markov, partition, markov_notes, markov_reset)
     partition = decode_partition(partition, NOTE_TO_FREQUENCY, quaver)
@@ -71,32 +71,41 @@ def play(partition, markov_notes, markov_reset, canvas, k=None, invert=False, m=
     if invert:
         partition = invertion(partition)
 
+    # We clean the canvas from possible previous animation
     canvas.delete("all")
 
+    # For every note we add a dot on the canvas depending and a sound
+    # The sound depend from the frequency an duration
+    # The size of the dot from the duration
+    # The color of the dot from his frequency
+    # The color of the dote are random if the sound as be modified,
+    # we don't have time to implement something with will get the note from a frequency
+    # More info on how to do it here: https://hypertextbook.com/facts/2003/DanielleDaly.shtml
     i = 0
     j = 0
     last_frequency = 0
     for frequency, duration in partition:
         if frequency != -1 and not m and not k and not invert:
-            sound(frequency, duration)
             canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30 - duration_to_size[duration],
                                15 + i * 30 + duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
                                fill=FREQUENCY_TO_COLOR[frequency])
             canvas.update()
+            sound(frequency, duration)
         elif frequency == 1 and not m and not k and not invert:
-            sound(last_frequency, duration)
             canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30,
                                15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
                                fill=FREQUENCY_TO_COLOR[last_frequency])
             canvas.update()
+            sound(last_frequency, duration)
         else:
-            # Put a random color and size if it have be transform, not in the dictionnary
+            # Put a random color if it have be transform, not in the dictionary
             sound(frequency, duration)
             colors = ['white', 'red', 'green', 'cyan', 'yellow', 'blue', 'magenta', 'black']
             canvas.create_oval(5 + i * 30 - duration_to_size[duration], 10 + j * 30,
                                15 + i * 30 - duration_to_size[duration], 20 + j * 30 + duration_to_size[duration],
                                fill=choice(colors))
             canvas.update()
+        # To map the dot in a square
         i += 1
         if i == 17:
             j += 1

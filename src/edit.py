@@ -30,9 +30,10 @@ def get_maxi_notes(notes):
     """
     maxi = -inf
     frequencies = []
+    # We loop on the note and seach the maximum frequency
     for frequency, _ in notes:
         if len(frequencies) == 8:
-            # There is only 8 type of notes (including the silence)
+            # There is only 8 type of notes (including the silence) so no need to try to find a bigger fequency
             break
         if frequency not in frequencies:
             frequencies.append(frequency)
@@ -48,8 +49,10 @@ def transposition(notes, k):
     :param k: The number use in the transposition ie: 15
     :return: All the notes transposed by k ie: [(15, 5), (15, 2.5), (-1, 20)]
     """
+    # We get the maximum note ...
     maxi = get_maxi_notes(notes)
 
+    # ... and do the operation (frequency + k) % maxi on all notes
     new_notes = []
     for frequency, duration in notes:
         if frequency > 0:
@@ -71,7 +74,10 @@ def invertion(notes):
     :param notes: The list of notes ie: [(396, 5), (396, 2.5), (-1, 20)]
     :return: All the notes invert ie: [(0, 5), (0, 2.5), (-1, 20)]
     """
+    # We get the maximum note ...
     maxi = get_maxi_notes(notes)
+
+    # ... and do the operation (maxi - frequency) % maxi on all notes
     new_notes = []
     for frequency, duration in notes:
         if frequency > 0:
