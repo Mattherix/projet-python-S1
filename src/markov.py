@@ -1,8 +1,14 @@
 import random
 
 
-# used to set the RNG to create the partition
+# TODO: @Tidoulidou Add the parameter in the docstrings(""" Blabla """) of your functions
+
 def ampli_tab(tab):
+    """Used to set the RNG to create the partition
+
+    :param tab:
+    :return:
+    """
     new_tab = []
     for i in range(len(tab)):
         if tab[i] > 0:
@@ -12,8 +18,13 @@ def ampli_tab(tab):
     return new_tab
 
 
-# identify a note by the number inside the note frequency list, and return the str note
 def write_note(n):
+    # TODO: @Tidoulidou Use a dictionnary
+    """Identify a note by the number inside the note frequency list, and return the str note
+
+    :param n: the number
+    :return: The str note
+    """
     text = ''
     if n == 0:
         text = "DO"
@@ -33,11 +44,18 @@ def write_note(n):
     return text
 
 
-# Reset all the settings if ver = True or if the note frequency list is empty, else it will do nothing
-def Markov_reset(mark, ver, markov_partition):
-    if (ver == True) or (mark == []):
-        #                Do=0                   Ré=1                   Mi=2                  Fa=3                   Sol=4                  La=5                  Si=6            Do Ré Mi Fa Sol La Si
-        # indice -> ((Do, Ré, Mi, Fa, Sol, La, Si),(Do, Ré, Mi, Fa, ...), ...)
+def markov_reset(mark, ver, markov_partition):
+    """Reset all the settings if ver = True or if the note frequency list is empty, else it will do nothing
+
+    :param mark:
+    :param ver:
+    :param markov_partition:
+    :return:
+    """
+    if ver or (mark == []):
+        # Do=0                   Ré=1                   Mi=2                  Fa=3                   Sol=4
+        # La=5                  Si=6            Do Ré Mi Fa Sol La Si indice -> ((Do, Ré, Mi, Fa, Sol, La, Si),(Do,
+        # Ré, Mi, Fa, ...), ...)
         mark = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
         markov_partition = ''
@@ -45,23 +63,28 @@ def Markov_reset(mark, ver, markov_partition):
     return mark, markov_partition
 
 
-# Take the reference partition and the note frenquency, and return a new note frequency list
-def Markov_set(parti, mark):
+def markov_set(parti, mark):
+    """Take the reference partition and the note frenquency, and return a new note frequency list
+
+    :param parti:
+    :param mark:
+    :return:
+    """
     ntab = []
     for i in range(0, len(parti)):
-        if (parti[i] == 'D'):
+        if parti[i] == 'D':
             ntab.append(0)
-        if (parti[i] == 'R'):
+        if parti[i] == 'R':
             ntab.append(1)
-        if (parti[i] == 'M'):
+        if parti[i] == 'M':
             ntab.append(2)
-        if (parti[i] == 'F'):
+        if parti[i] == 'F':
             ntab.append(3)
-        if (parti[i] == 'S' and parti[i + 1] == 'O'):
+        if parti[i] == 'S' and parti[i + 1] == 'O':
             ntab.append(4)
-        if (parti[i] == 'L' and parti[i + 1] == 'A'):
+        if parti[i] == 'L' and parti[i + 1] == 'A':
             ntab.append(5)
-        if (parti[i] == 'S' and parti[i + 1] == 'I'):
+        if parti[i] == 'S' and parti[i + 1] == 'I':
             ntab.append(6)
 
     for i in range(1, len(ntab)):
@@ -73,18 +96,25 @@ def Markov_set(parti, mark):
     return mark
 
 
-# Take the note frequency and the existing Markov partition, and you set the number of note you want in your new Markov partition
-def Markov_use(tab, nb, markov_partition):
-    T = []
-    T = ampli_tab(tab[7])
-    r = random.randint(0, len(T) - 1)
-    ind = T[r]
+def markov_use(tab, nb, markov_partition):
+    """Take the note frequency and the existing Markov partition, and you set the number of note you want in your new
+    Markov partition
+
+    :param tab:
+    :param nb:
+    :param markov_partition:
+    :return:
+    """
+    t = []
+    t = ampli_tab(tab[7])
+    r = random.randint(0, len(t) - 1)
+    ind = t[r]
     wrgt = write_note(ind)
     markov_partition = markov_partition + (wrgt + 'n ')
     for i in range(nb - 1):
-        T = ampli_tab(tab[ind])
-        r = random.randint(0, len(T) - 1)
-        ind = T[r]
+        t = ampli_tab(tab[ind])
+        r = random.randint(0, len(t) - 1)
+        ind = t[r]
         wrgt = write_note(ind)
         markov_partition = markov_partition + (wrgt + 'n ')
 
@@ -99,6 +129,6 @@ def markov(partition, partition_origin, number_of_note=20):
     :param number_of_note: Number of note in the new partition, default 20
     :return: The partition as a strings
     """
-    mark, markov_partition = Markov_reset([], False, partition)
-    tab = Markov_set(partition_origin, mark)
-    return Markov_use(tab, number_of_note, markov_partition)
+    mark, markov_partition = markov_reset([], False, partition)
+    tab = markov_set(partition_origin, mark)
+    return markov_use(tab, number_of_note, markov_partition)
