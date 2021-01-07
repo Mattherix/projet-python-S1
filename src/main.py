@@ -50,7 +50,7 @@ def main():
     """
     window = Tk()
     window['bg'] = "#9E9E9E"
-    window.geometry('400x200')
+    window.geometry('1000x980')
     window.title("Projet python")
 
     filepath = filedialog.askopenfilename(initialdir="/", title="Choisir un fichier", filetypes=(
@@ -66,6 +66,8 @@ def main():
         partitions.append(title_and_partitions[1])
     liste.pack(side=LEFT)
 
+    label = Label(window, text="Création d'une partition")
+    label.pack()
     label = Label(window, text="Titre de la nouvelle musique ex: Yesterday")
     label.pack()
     title = Text(window, height=5, width=20)
@@ -79,21 +81,30 @@ def main():
                    command=lambda: add_partition(title, text, filepath, liste))
     btn_2.pack(side=TOP, pady=5)
 
-    canvas = Canvas(window, bg='#EEEEEE', height=500, width=500, bd=0, highlightthickness=0)
+    canvas = Canvas(window, bg='#EEEEEE', height=300, width=500, bd=0, highlightthickness=0)
     canvas.pack()
 
     k = IntVar()
     invert = BooleanVar()
     m = BooleanVar()
+    mn = IntVar()
+    mr = BooleanVar()
     btn_transposition = Scale(window, orient='horizontal', from_=-100, to=100, tickinterval=1, length=350, variable=k)
     btn_invertion = Checkbutton(window, text="Invertion", variable=invert)
-    btn_markov = Checkbutton(window, text="Chaine de Markov, sélectionez une musique et entré une partition",
+    btn_markov = Checkbutton(window, text="Chaine de Markov. Sélectionez une musique de référence puis le nombre de notes",
                              variable=m)
+    label_nbnote_markov = Label(window, text="Mettre le nombre de notes à 0 facilite l'ajout de plusieurs musiques de référence")
+    btn_nbnote_markov = Scale(window, orient='horizontal', from_=0, to=120, tickinterval=15, length=350, variable=mn)
+    btn_reset_markov = Checkbutton(window, text="Réinitialiser les musiques de référence pour la prochaine chaine de Markov",
+                                   variable=mr)
     btn_transposition.pack()
     btn_invertion.pack()
     btn_markov.pack()
+    label_nbnote_markov.pack()
+    btn_nbnote_markov.pack()
+    btn_reset_markov.pack()
     btn_1 = Button(window, text="Jouer", width=15,
-                   command=lambda: play(partitions[get_index(liste)], canvas, k.get(), invert.get(), m.get(),
+                   command=lambda: play(partitions[get_index(liste)], mn.get(), mr.get(), canvas, k.get(), invert.get(), m.get(),
                                         partition_markov=text.get("1.0", "end")))
     btn_1.pack()
     btn_3 = Button(window, text="Quitter", width=15, command=window.destroy)
