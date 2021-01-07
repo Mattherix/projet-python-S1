@@ -42,23 +42,18 @@ def write_note(n):
     :param n: the number
     :return: The str note
     """
-    text = ''
-    if n == 0:
-        text = "DO"
-    elif n == 1:
-        text = "RE"
-    elif n == 2:
-        text = "MI"
-    elif n == 3:
-        text = "FA"
-    elif n == 4:
-        text = "SOL"
-    elif n == 5:
-        text = "LA"
-    elif n == 6:
-        text = "SI"
+    
+    Dict = {
+        0: 'DO',
+        1: 'RE',
+        2: 'MI',
+        3: 'FA',
+        4: 'SOL',
+        5: 'LA',
+        6: 'SI'
+    }
 
-    return text
+    return Dict.get(n)
 
 
 def markov_reset(mark, ver, markov_partition):
