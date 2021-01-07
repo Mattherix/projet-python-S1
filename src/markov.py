@@ -24,8 +24,8 @@ import random
 def ampli_tab(tab):
     """Used to set the RNG's interval to create the partition by using the list of note frequency
 
-    :param tab: note frenquency example [0, 3, 5, 1, 0, 4, 1]
-    :return: RNG's interval example [1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 5, 5, 5, 6]
+    :param tab: Note frenquency list.  example [0, 3, 5, 1, 0, 4, 1]
+    :return: RNG's interval list.  example [1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 5, 5, 5, 6]
     """
     new_tab = []
     for i in range(len(tab)):
@@ -37,9 +37,9 @@ def ampli_tab(tab):
 
 
 def write_note(n):
-    """Identify a note by the number inside the RNG's interval list, and return the str note
+    """Identify a note by the number get in the RNG's interval list, and return the str note
 
-    :param n: the number
+    :param n: The number of the RNG's interval list
     :return: The str note
     """
     
@@ -59,10 +59,10 @@ def write_note(n):
 def markov_reset(mark, ver, markov_partition):
     """Reset all the settings if ver = True or if the note frequency list is empty, else it will do nothing
 
-    :param mark:
-    :param ver:
-    :param markov_partition:
-    :return:
+    :param mark: The note frquency list
+    :param ver: Boolean that defined if the note frequency list should reset
+    :param markov_partition: The final partition that will be return when all steps are done in markov.py
+    :return: The frequency list and the partition
     """
     if ver or (mark == []):
         # Do=0                   Ré=1                   Mi=2                  Fa=3
@@ -78,9 +78,9 @@ def markov_reset(mark, ver, markov_partition):
 def markov_set(parti, mark):
     """Take the reference partition and the note frenquency, and return a new note frequency list
 
-    :param parti:
-    :param mark:
-    :return:
+    :param parti: The reference partition str
+    :param mark: The note frequency list
+    :return: The modified note frequency list
     """
     ntab = []
     for i in range(0, len(parti)):
@@ -112,10 +112,10 @@ def markov_use(tab, nb, markov_partition):
     """Take the note frequency and the existing Markov partition, and you set the number of note you want in your new
     Markov partition
 
-    :param tab:
-    :param nb:
-    :param markov_partition:
-    :return:
+    :param tab: The note frequency list
+    :param nb: The number Int of notes for the partition in return
+    :param markov_partition: The partition str that will be return
+    :return: The new partition str
     """
     t = []
     t = ampli_tab(tab[7])
