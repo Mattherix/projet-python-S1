@@ -53,9 +53,9 @@ def markov_reset(mark, ver, markov_partition):
     :return:
     """
     if ver or (mark == []):
-        # Do=0                   Ré=1                   Mi=2                  Fa=3                   Sol=4
-        # La=5                  Si=6            Do Ré Mi Fa Sol La Si indice -> ((Do, Ré, Mi, Fa, Sol, La, Si),(Do,
-        # Ré, Mi, Fa, ...), ...)
+        # Do=0                   Ré=1                   Mi=2                  Fa=3
+        # Sol=4                   La=5                  Si=6            Do Ré Mi Fa Sol La Si
+        #  indice -> ((Do, Ré, Mi, Fa, Sol, La, Si),(Do, Ré, Mi, Fa, ...), ...)
         mark = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
         markov_partition = ''
