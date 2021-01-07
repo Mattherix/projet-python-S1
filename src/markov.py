@@ -136,7 +136,7 @@ def markov_use(tab, nb, markov_partition):
 def markov(partition, partition_origin, number_of_note, reset_value):
     """Create a partition with markov
 
-    :param partition: The partion as a string i.e.
+    :param partition: The partion as a string
     :param partition_origin: The original partition
     :param number_of_note: Number of note in the new partition
     :return: The partition as a strings
