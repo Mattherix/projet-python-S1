@@ -49,6 +49,9 @@ def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
         partition = transposition(partition, k)
     if invert:
         partition = invertion(partition)
+
+    canvas.delete("all")
+
     i = 0
     j = 0
     last_frequency = 0
@@ -80,6 +83,7 @@ def play(partition, canvas, k=None, invert=False, m=False, partition_markov=""):
         if j == 17:
             j = 0
         last_frequency = frequency
+
 
 
 def sound(freq, duration):
